@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDO_list.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25"
+            
+            >
+            <Label Text="ToDo List" HorizontalOptions="Center"> </Label>
+            <Image Source="to_do_list.png"
+                   WidthRequest="100"
+                   HeightRequest="100"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="NewTaskEntry" Placeholder="Введите задачу"/>
+            <Button Text="Добавить" Clicked="OnAddTaskClicked"/>
+            <ListView x:Name="TasksListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Label Text="{Binding}" 
+                           VerticalOptions="Center"
+                           HorizontalOptions="FillAndExpand" />
+                                <Button Text="❌" 
+                            Clicked="OnDeleteTaskClicked" 
+                            CommandParameter="{Binding}"
+                            HorizontalOptions="End"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
