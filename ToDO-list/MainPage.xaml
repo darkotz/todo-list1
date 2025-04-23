@@ -15,8 +15,17 @@
                    HeightRequest="100"
                    HorizontalOptions="Center"/>
 
-            <Entry x:Name="NewTaskEntry" Placeholder="Введите задачу"/>
-            <Button Text="Добавить" Clicked="OnAddTaskClicked"/>
+            <Entry x:Name="NewTaskEntry" Placeholder="Skriv ner ett nytt task"/>
+            <Button Text="lägga till" 
+            BackgroundColor="#A78BFA"
+            TextColor="White"
+            CornerRadius="20"
+            Padding="10"
+            FontSize="18" Clicked="OnAddTaskClicked">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Opacity="0.4" Radius="10"  Offset="5,5" />
+                </Button.Shadow>
+            </Button>
             <ListView x:Name="TasksListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>

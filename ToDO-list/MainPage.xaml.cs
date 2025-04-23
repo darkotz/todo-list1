@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Maui.Views;
+using System.Collections.ObjectModel;
 
 namespace ToDO_list
 {
@@ -14,13 +15,24 @@ namespace ToDO_list
             TasksListView.ItemsSource = Tasks;
         }
 
-        private void OnAddTaskClicked(object sender, EventArgs e)
+        private async void OnAddTaskClicked(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(NewTaskEntry.Text))
+            var popup = new AdditionalInfoPopup();
+            var result = await this.ShowPopupAsync(popup);
+
+            string baseText = NewTaskEntry.Text;
+            string extraInfo = result as string;
+
+            if (!string.IsNullOrWhiteSpace(baseText))
             {
-                Tasks.Add(NewTaskEntry.Text);
-                NewTaskEntry.Text = string.Empty;
+                string finalTask = baseText;
+                if (!string.IsNullOrWhiteSpace(extraInfo))
+                    finalTask += $" — {extraInfo}";
+
+                Tasks.Add(finalTask); // добавь в список
+                NewTaskEntry.Text = "";
             }
+
         }
 
         private void OnDeleteTaskClicked(object sender, EventArgs e)
@@ -30,5 +42,7 @@ namespace ToDO_list
                 Tasks.Remove(task);
             }
         }
+
+        
     }
 }
