@@ -8,28 +8,36 @@ namespace ToDO_list
 
 
         private ObservableCollection<string> Tasks { get; set; } = new();
+        public List<string> TaskType { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
             TasksListView.ItemsSource = Tasks;
+            TaskType = new List<string> { "❗", "❗❗", "❗❗❗" };
+
         }
 
         private async void OnAddTaskClicked(object sender, EventArgs e)
         {
             var popup = new AdditionalInfoPopup();
-            var result = await this.ShowPopupAsync(popup);
+            var result = await this.ShowPopupAsync(popup) as AdditionalInfoResult;
 
             string baseText = NewTaskEntry.Text;
-            string extraInfo = result as string;
+            
 
             if (!string.IsNullOrWhiteSpace(baseText))
             {
                 string finalTask = baseText;
-                if (!string.IsNullOrWhiteSpace(extraInfo))
-                    finalTask += $" — {extraInfo}";
+                if (result != null) { 
 
-                Tasks.Add(finalTask); // добавь в список
+                    if (!string.IsNullOrWhiteSpace(result.ExtraInfo))
+                        finalTask += $" — {result.ExtraInfo}";
+                    if (!string.IsNullOrWhiteSpace(result.Importance))
+                    finalTask = $"{result.Importance} {finalTask}";
+                }
+
+                Tasks.Add(finalTask); 
                 NewTaskEntry.Text = "";
             }
 
